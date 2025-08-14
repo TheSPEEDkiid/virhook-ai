@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
+const audioRoutes = require('./routes/audio');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -70,6 +71,9 @@ app.post('/api/upload', upload.single('audio'), (req, res) => {
     path: req.file.path
   });
 });
+
+// Use the audio analysis routes
+app.use('/api/audio', audioRoutes);
 
 // Basic route for testing
 app.get('/', (req, res) => {

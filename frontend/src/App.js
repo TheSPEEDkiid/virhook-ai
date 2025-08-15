@@ -245,27 +245,91 @@ function App() {
             </div>
 
             {/* Song Info Card */}
-            <div className="song-info-card animate-slide-up">
-              <h3>📊 Track Information</h3>
-              <div className="info-grid">
-                <div className="info-item">
-                  <span className="label">Title:</span>
-                  <span className="value">{analysis.title}</span>
-                </div>
-                <div className="info-item">
-                  <span className="label">Artist:</span>
-                  <span className="value">{analysis.artist}</span>
-                </div>
-                <div className="info-item">
-                  <span className="label">Duration:</span>
-                  <span className="value">{formatTime(analysis.duration)}</span>
-                </div>
-                <div className="info-item">
-                  <span className="label">Sample Rate:</span>
-                  <span className="value">{analysis.sampleRate} Hz</span>
-                </div>
-              </div>
-            </div>
+<div className="song-info-card animate-slide-up">
+  <h3>📊 Track Information</h3>
+  <div className="info-grid">
+    <div className="info-item">
+      <span className="label">Title:</span>
+      <span className="value">{analysis.title}</span>
+    </div>
+    <div className="info-item">
+      <span className="label">Artist:</span>
+      <span className="value">{analysis.artist}</span>
+    </div>
+    <div className="info-item">
+      <span className="label">Duration:</span>
+      <span className="value">{formatTime(analysis.duration)}</span>
+    </div>
+    <div className="info-item">
+      <span className="label">Sample Rate:</span>
+      <span className="value">{analysis.sampleRate} Hz</span>
+    </div>
+    {analysis.genreAnalysis && (
+      <div className="info-item">
+        <span className="label">Genre:</span>
+        <span className="value">{analysis.genreAnalysis.primary}</span>
+      </div>
+    )}
+    {analysis.audioQuality && (
+      <div className="info-item">
+        <span className="label">Audio Quality:</span>
+        <span className="value quality-badge">{analysis.audioQuality.rating}</span>
+      </div>
+    )}
+  </div>
+
+  {/* Add Genre Tags */}
+  {analysis.genreAnalysis && analysis.genreAnalysis.characteristics.length > 0 && (
+    <div className="genre-section">
+      <h4>🎵 Genre Characteristics</h4>
+      <div className="genre-tags">
+        {analysis.genreAnalysis.characteristics.map((char, idx) => (
+          <span key={idx} className="genre-tag">{char}</span>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* Add Mood Analysis */}
+  {analysis.moodAnalysis && (
+    <div className="mood-section">
+      <h4>🎭 Mood Analysis</h4>
+      <div className="mood-grid">
+        <div className="mood-item">
+          <span className="mood-label">Primary Mood:</span>
+          <span className="mood-value">{analysis.moodAnalysis.primaryMood}</span>
+        </div>
+        <div className="mood-tags">
+          {analysis.moodAnalysis.emotionalTags.map((tag, idx) => (
+            <span key={idx} className="mood-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* Add Viral Potential */}
+  {analysis.viralFactors && (
+    <div className="viral-section">
+      <h4>🚀 Viral Potential</h4>
+      <div className="viral-score">
+        <span className="viral-label">Overall Score:</span>
+        <span className="viral-value">{Math.round(analysis.viralFactors.overall * 100)}%</span>
+      </div>
+      <div className="viral-factors">
+        <div className="factor">
+          <span>Catchiness: {Math.round(analysis.viralFactors.catchiness * 100)}%</span>
+        </div>
+        <div className="factor">
+          <span>Shareability: {Math.round(analysis.viralFactors.shareability * 100)}%</span>
+        </div>
+        <div className="factor">
+          <span>Memorability: {Math.round(analysis.viralFactors.memorability * 100)}%</span>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
 
             {/* Hooks Section */}
             <div className="hooks-section animate-slide-up-delay">

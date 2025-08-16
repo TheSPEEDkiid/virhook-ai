@@ -1,8 +1,22 @@
-if (moods.energy < 0.4 && moods.valence > 0.5) contexts.push('Study/Focus', 'Relaxation');
-if (moods.valence < 0.4) contexts.push('Emotional Processing', 'Late Night Listening');
-if (moods.arousal > 0.7) contexts.push('Gaming', 'Intense Activities');
+const express = require('express');
+const router = express.Router();
+const fs = require('fs');
+const path = require('path');
+const { parseFile } = require('music-metadata');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const crypto = require('crypto');
 
-return contexts;
+function identifyListeningContext(moods) {
+  const contexts = [];
+
+  if (moods.energy > 0.8 && moods.danceability > 0.7) contexts.push('Clubs/Parties', 'Workout/Gym');
+  if (moods.valence > 0.7 && moods.energy > 0.5) contexts.push('Driving', 'Social Gatherings');
+  if (moods.energy < 0.4 && moods.valence > 0.5) contexts.push('Study/Focus', 'Relaxation');
+  if (moods.valence < 0.4) contexts.push('Emotional Processing', 'Late Night Listening');
+  if (moods.arousal > 0.7) contexts.push('Gaming', 'Intense Activities');
+
+  return contexts;
 }
 
 // Real-time viral potential calculation with market intelligence
@@ -745,6 +759,47 @@ return {
 };
 }
 
+// Add these missing helper functions before your router definitions
+
+function assessTherapeuticValue(moods) {
+  let value = 'Low';
+  let description = 'Limited therapeutic applications';
+
+  if (moods.valence > 0.8) {
+    value = 'High';
+    description = 'Excellent for mood enhancement and stress relief';
+  } else if (moods.energy < 0.3 && moods.valence > 0.4) {
+    value = 'Medium';
+    description = 'Good for meditation and anxiety reduction';
+  } else if (moods.valence < 0.4 && moods.arousal < 0.5) {
+    value = 'Medium';
+    description = 'Helpful for emotional processing and catharsis';
+  }
+
+  return { value, description };
+}
+
+function mapEmotionalJourney(moods) {
+  return {
+    initial_hook: moods.arousal > 0.6 ? 'Immediate engagement' : 'Gradual build',
+    emotional_peak: `${Math.round(moods.arousal * 100)}% intensity`,
+    listener_retention: moods.valence > 0.6 ? 'High replay value' : 'Situational listening',
+    social_sharing: moods.energy > 0.6 && moods.valence > 0.5 ? 'High share potential' : 'Personal experience'
+  };
+}
+
+function identifyTargetDemographics(moods) {
+  const demographics = [];
+
+  if (moods.energy > 0.8) demographics.push('Gen Z (16-24)', 'Young Millennials (25-30)');
+  if (moods.valence > 0.7) demographics.push('Mainstream Audiences', 'Family-Friendly');
+  if (moods.valence < 0.4) demographics.push('Alternative/Indie Listeners', 'Mature Audiences');
+  if (moods.danceability > 0.8) demographics.push('Club/Festival Goers', 'Dance Music Fans');
+  if (moods.energy < 0.4) demographics.push('Adult Contemporary', 'Sophisticated Listeners');
+
+  return [...new Set(demographics)];
+}
+
 // Enhanced route handlers
 router.post('/analyze', async (req, res) => {
 try {
@@ -906,7 +961,7 @@ const health = {
 res.json(health);
 });
 
-module.exports = router;function classifyAdvancedMoodWithContext(moods) {
+function classifyAdvancedMoodWithContext(moods) {
 if (moods.energy > 0.85 && moods.valence > 0.8) return 'Euphoric Celebration';
 if (moods.energy > 0.75 && moods.valence > 0.7) return 'Energetic Joy';
 if (moods.energy > 0.7 && moods.danceability > 0.8) return 'Party Anthem';
@@ -967,16 +1022,16 @@ if (impact > 0.4) return { level: 'Moderate', description: 'Pleasant emotional r
 return { level: 'Low', description: 'Subtle emotional impact' };
 }
 
-function identifyListeningContext(moods) {
-const contexts = [];
+function identifyListeningContexts(moods) {
+  const contexts = [];
 
-if (moods.energy > 0.8 && moods.danceability > 0.7) contexts.push('Clubs/Parties', 'Workout/Gym');
-if (moods.valence > 0.7 && moods.energy > 0.5) contexts.push('Driving', 'Social Gatherings');
-if (moods.energy < 0.4 && moods.valence > 0.5) contexts.push('Study/Focus', 'Relaxation');
-if (moods.valence < 0.4) contexts.push('Emotional Processing', 'Late Night Listening');
-if (moods.arousal > 0.7) contexts.push('Gaming', 'Intense Activities');
+  if (moods.energy > 0.8 && moods.danceability > 0.7) contexts.push('Clubs/Parties', 'Workout/Gym');
+  if (moods.valence > 0.7 && moods.energy > 0.5) contexts.push('Driving', 'Social Gatherings');
+  if (moods.energy < 0.4 && moods.valence > 0.5) contexts.push('Study/Focus', 'Relaxation');
+  if (moods.valence < 0.4) contexts.push('Emotional Processing', 'Late Night Listening');
+  if (moods.arousal > 0.7) contexts.push('Gaming', 'Intense Activities');
 
-return contexts;
+  return contexts;
 }
 
 function mapEmotionalArc(moods) {
@@ -1044,14 +1099,12 @@ const contexts = [];
 
 if (moods.energy > 0.8 && moods.danceability > 0.7) contexts.push('Clubs/Parties', 'Workout/Gym');
 if (moods.valence > 0.7 && moods.energy > 0.5) contexts.push('Driving', 'Social Gatherings');
-if (moods.energy < 0.4 && moods.valence > 0.5) contexts.push('Study/Focusconst express = require('express');
-const router = express.Router();
-const fs = require('fs');
-const path = require('path');
-const { parseFile } = require('music-metadata');
-const axios = require('axios');
-const cheerio = require('cheerio');
-const crypto = require('crypto');
+if (moods.energy < 0.4 && moods.valence > 0.5) contexts.push('Study/Focus', 'Relaxation');
+if (moods.valence < 0.4) contexts.push('Emotional Processing', 'Late Night Listening');
+if (moods.arousal > 0.7) contexts.push('Gaming', 'Intense Activities');
+
+return contexts;
+}
 
 // Enhanced Enterprise Viral Intelligence Engine with Real-time Data
 class EnterpriseViralIntelligenceEngine {
@@ -2298,3 +2351,4 @@ Object.keys(advancedKeywords).forEach(category => {
 return { energyMod, valenceMod, arousalMod, danceMod };
 }
   
+module.exports = router;
